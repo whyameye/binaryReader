@@ -18,7 +18,7 @@
 #define NO_CARD_TOKEN 31
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   // turn on pullup resistors in input pins
   for (uint8_t i=2;i<7;i++) {
     digitalWrite(i, HIGH);
@@ -67,7 +67,7 @@ void loop() {
    uint8_t number = 0;
    bool noDots = true;
    for (uint8_t i=0;i<5;i++) {
-     var pinState = digitalRead(i+2);
+     uint8_t pinState = digitalRead(i+2);
      powersOf2[i] |= !pinState;
      noDots &= pinState;
      number += (1<<i)*powersOf2[i];

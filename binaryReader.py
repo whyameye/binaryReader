@@ -4,7 +4,7 @@
 # uses espeak. Could be changed to festival:
 # echo "(SayText \"gimme binary\")" | festival --pipe
 
-import subprocess, serial
+import subprocess, serial, time
 
 # CONSTANTS
 START_CARD_TOKEN = chr(30+ord('A')-1) # '^'
@@ -12,7 +12,12 @@ NO_CARD_TOKEN = chr(31+ord('A')-1) # '_'
 
 # SETUP
 word = ""
-ser = serial.Serial('/dev/ttyUSB0', 115200)
+ser = serial.Serial('/dev/ttyUSB0', 9600,
+                    bytesize=serial.EIGHTBITS,
+                    parity=serial.PARITY_NONE,
+                    stopbits=serial.STOPBITS_ONE,
+                    xonxoff=0,
+                    rtscts=0)
 
 # LOOP
 while(1):
