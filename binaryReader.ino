@@ -1,5 +1,9 @@
+// Binary Reader
+// v.1: John Harrison 20Feb2015
+
 // Pins 2-6 correspond to the binary i.e
-// Pin 2 which is 1s digit will be low when on
+// Example: Pin 2 which is 1s digit will be low for 1 and high for 0
+// Start the arduino with no card in the reader
 
 // TWEAK HERE:
 #define MIN_TIME_BEFORE_ANOTHER_LETTER 100 // ms
@@ -63,8 +67,9 @@ void loop() {
    uint8_t number = 0;
    bool noDots = true;
    for (uint8_t i=0;i<5;i++) {
-     powersOf2[i] |= !digitalRead(i+2);
-     noDots &= digitalRead(i+2);
+     var pinState = digitalRead(i+2);
+     powersOf2[i] |= !pinState;
+     noDots &= pinState;
      number += (1<<i)*powersOf2[i];
    }
    number = (noDots ? 0 : number);
