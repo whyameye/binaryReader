@@ -24,16 +24,16 @@ while(1):
     x = ser.read(1)          # read one byte
     if x == START_CARD_TOKEN:
             subprocess.call(["toilet","-f", "mono12", "-F","gay","Got Card"])
-            subprocess.call(["espeak","Hello?"])        
+            subprocess.call(["espeak","-ven+f4","Card Initialized"])        
             word = ""
     elif x == NO_CARD_TOKEN:
         if word != "":
             # print and say word
             subprocess.call(["toilet","-f", "mono12", "-F","gay",word])
-            subprocess.call(["espeak",word])
+            subprocess.call(["espeak","-ven+f4",word])
     else:
         # new letter received
         # print and say the letter
         subprocess.call(["toilet","-f", "mono12", "-F","gay",x])
-        subprocess.call(["espeak","-m","<speak><say-as interpret-as='characters'>"+str(x)+"</say-as></speak>"])
+        subprocess.call(["espeak","-ven+f4","-m","<speak><say-as interpret-as='characters'>"+str(x)+"</say-as></speak>"])
         word += x

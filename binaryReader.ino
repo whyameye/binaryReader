@@ -6,7 +6,7 @@
 // Start the arduino with no card in the reader
 
 // TWEAK HERE:
-#define MIN_TIME_BEFORE_ANOTHER_LETTER 100 // ms
+#define MIN_TIME_BEFORE_ANOTHER_LETTER 25 // ms
 
 // STATES:
 #define NO_CARD 0
@@ -40,6 +40,7 @@ void loop() {
     case BETWEEN_LETTERS:
       if (lastState == NO_CARD) {
 	send(START_CARD_TOKEN);
+	delay(MIN_TIME_BEFORE_ANOTHER_LETTER);
       } else {
 	send(lastNumber);
 	delay(MIN_TIME_BEFORE_ANOTHER_LETTER);
@@ -68,6 +69,9 @@ void loop() {
    bool noDots = true;
    for (uint8_t i=0;i<5;i++) {
      uint8_t pinState = digitalRead(i+2);
+     for (uint8_t j = 0; j < 31; j++) {
+       pinState &= digitalRead(i+2);
+     }
      powersOf2[i] |= !pinState;
      noDots &= pinState;
      number += (1<<i)*powersOf2[i];
